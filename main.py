@@ -17,6 +17,7 @@ TOKEN = bot_config.TOKEN
 async def on_ready():
   print('成功しました')
   print(f'" {client.user} "としてログイン中')
+  await client.change_presence(activity=discord.Game(name=str(ex.cl())))
   await tree.sync()
 
 
