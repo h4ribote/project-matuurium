@@ -24,6 +24,10 @@ def f_checker(user_id: str):
   else:
     return False
 
+def cl() -> str:
+  activity = "created by h4ribote"
+  return str(activity)
+
 def id_format(id: str):
   remove1 = "<@"
   remove2 = ">"

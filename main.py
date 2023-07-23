@@ -1,8 +1,8 @@
 import discord
 from discord import app_commands
 import random
-import ex as ex
-import bank as bank
+import ex
+import bank
 from config import bot_config
 
 intents = discord.Intents.default()
