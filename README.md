@@ -28,10 +28,10 @@ lune.py - 主にluneの操作に使われる関数
 ex.py - さまざまな操作の関数
 
 db/<br>
-  _system/<br>
-         promo-codes.txt - プロモーションコードに関する情報<br>
-         log.txt - 送金等の操作のログ<br>
-  user/ - 各ユーザーの残高・取引情報
+　　_system/<br>
+　　　　promo-codes.txt - プロモーションコードに関する情報<br>
+　　　　log.txt - 送金等の操作のログ<br>
+　　user/ - 各ユーザーの残高・取引情報
 
 # コマンド一覧
 
@@ -46,8 +46,8 @@ db/<br>
 /promo-code - プロモーションコードを使用
 
 /order_buy & /order_sell - 注文を作成<br>
-    注文は注文価格をlune、数量をmtriで指定<br>
-    例:100luneを1mtriにしたい ==> /order_sell price 100 amount 1
+　　注文は注文価格をlune、数量をmtriで指定<br>
+　　例:100luneを1mtriにしたい ==> /order_sell price 100 amount 1
 
 # 作成者
 h4ribote<br>
