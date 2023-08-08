@@ -3,8 +3,8 @@
 Project-matuutium
 </h1>
 </div>
-https://img.shields.io/badge/Python-{version}-blue
 
+<img src="https://img.shields.io/badge/Python-{version}-blue" height="20" alt="Version-of-Python">
 # どんなボット？
 discordでFXっぽいことができるボット
 matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユーザー間で取引できる
