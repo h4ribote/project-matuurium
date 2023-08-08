@@ -8,6 +8,7 @@ https://img.shields.io/badge/Python-{version}-blue
 # どんなボット？
 discordでFXっぽいことができるボット
 matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユーザー間で取引できる
+
 ビットコイン等の実在する通貨の変動に対応するものも制作予定
 
 # 使い方は？年収は？彼女はいるの？
