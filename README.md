@@ -5,6 +5,7 @@ Project-matuutium
 </div>
 
 <img src="https://img.shields.io/badge/Python-3.11.4-blue" height="20" alt="Version-of-Python">
+
 # どんなボット？
 discordでFXっぽいことができるボット
 matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユーザー間で取引できる
@@ -17,7 +18,6 @@ matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユ
 .envにボットのトークンを貼り付けてmain.pyを実行
 
 # ファイル構成
-
 main.py - 名前の通りメインファイル。 .envにトークンを貼った後に起動する
 
 bank.py - 主にmtriの操作に使われる関数
