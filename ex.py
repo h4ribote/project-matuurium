@@ -1,7 +1,9 @@
 import os
 import datetime
+import bank
 
 def path(user_id: str,content: str) -> str:
+  user_id = id_format(user_id)
   """
     データベースのファイルのパスを出力
 
@@ -12,28 +14,40 @@ def path(user_id: str,content: str) -> str:
     Returns:
         str:'./db/user/{user_id}/{content}.txt'
   """
-  return (f'./db/{user_id}/{content}.txt')
+  return (f'./db/user/{user_id}/{content}.txt')
 
 def path_dir(user_id: str) -> str:
-  return ('./db/' + str(user_id) + '/')
+  user_id = id_format(user_id)
+  return ('./db/user/' + str(user_id) + '/')
 
 def f_checker(user_id: str):
+  """
+    データベースにファイルが存在するかを確認
+
+    Parameters:
+        user_id (str): ユーザーID
+
+    Returns:
+        bool:ファイルが存在する=True,ファイルが存在しない=False
+  """
+  user_id = id_format(user_id)
   is_dir = os.path.isdir(path_dir(str(user_id)))
   if is_dir:
     return True
   else:
     return False
 
-def cl() -> str:
-  activity = "created by h4ribote"
-  return str(activity)
-
-def id_format(id: str):
+def id_format(user_id: str) -> str:
+  user_id = str(user_id)
   remove1 = "<@"
   remove2 = ">"
-  id = id.replace(remove1, "")
-  id = id.replace(remove2, "")
-  return id
+  user_id = user_id.replace(remove1, "")
+  user_id = user_id.replace(remove2, "")
+  return str(user_id)
+
+def cl() -> str:
+  activity = "課題に充てる時間はこのボットに費やされたのだフハハハハ...はぁ..."
+  return str(activity)
 
 def log_maker(f: str,t: str,i: str,a: str) -> str:
   """
@@ -56,5 +70,63 @@ def log_maker(f: str,t: str,i: str,a: str) -> str:
   minute = current_time.minute
   second = current_time.second
   time = (f'<{year}-{month}-{day}  {hour}:{minute}:{second}>')
-  with open(path("_system","log"), 'a') as log:
+  with open(('./db/_system/log.txt'), 'a') as log:
     log.write(f'{time} ({i}:"{a}") from <{f}> to <{t}>\n')
+
+
+def promo(code:str,user_id:str):
+  if f_checker(user_id) == False:
+    bank.register(user_id)
+  code = code + "="
+  user_id = id_format(user_id)
+  with open("./db/_system/promo-codes.txt", 'r') as file:
+    content = file.read()
+  with open(path(user_id,"promo"), 'r') as file:
+    used = file.read()
+  if code in content:
+    if (code + "used") in used:
+      return "使用済みのコードです"
+    else:
+      index = content.find(code)
+      if index != -1:
+        # ターゲットの文字列が見つかった場合
+        reward = content[index + len(code):index + len(code) + 8]
+        times = content[index + len(code) + 9:]
+        index2 = times.find(")")
+        times = int(times[:index2]) #times=使用回数
+        if times == 0:
+          return "既に使用可能な回数を超えたコードです"
+        else:
+          times = times - 1
+          times = str(times)
+        remove = "x"
+        reward = reward.replace(remove, "")
+        reward = int(reward)
+        bank.transfer(user_id,reward,"!admin-bank")
+        reward = str(reward)
+        with open((f'./db/user/{user_id}/promo.txt'), 'a') as text:
+          text.write(f'\n{code}used')
+        content1 = content[:index + len(code) + 9]
+        content2 = content[index + len(code) + 9 + index2:]
+        new_content = content1 + times + content2
+        with open("./db/_system/promo-codes.txt", "w") as count:
+          count.write(new_content)
+        code = code.replace("=","")
+        log_maker("system",user_id,"promo:" + code,reward)
+        return ("登録が完了しました\ncode:" + code + " 報酬:" + reward)
+      else:
+        return "不正なコードです"
+  else:
+    return "コードが存在しません"
+
+
+def time_stamp() -> str:
+  current_time = datetime.datetime.now()
+  year = current_time.year
+  month = current_time.month
+  day = current_time.day
+  hour = current_time.hour
+  minute = current_time.minute
+  second = current_time.second
+  time = (f'{year}-{month}-{day}  {hour}:{minute}:{second}')
+  return time

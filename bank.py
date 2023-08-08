@@ -1,6 +1,7 @@
 import ex
 import os
 
+
 def register(id):
   if os.path.isdir(ex.path_dir(id)) == False:
     os.mkdir(ex.path_dir(id))
@@ -8,27 +9,37 @@ def register(id):
   regist_user.write('0')
   regist_user.close()
   regist_user = open(ex.path(id,"promo"),'w')
+  regist_user.write('')
+  regist_user.close()
+  regist_user = open(ex.path(id,"lune"),'w')
   regist_user.write('0')
   regist_user.close()
+  regist_user = open(ex.path(id,"order"),'w')
+  regist_user.write('')
+  regist_user.close()
   ex.log_maker(id,"system","regist","null")
+
+
+
 
 def balance(id) -> int:
   with open(ex.path(id,"bank"), 'r') as file:
     content = file.read()
   return int(content)
 
-def transfer(dest,amount: int,sourse):
-  dest = ex.id_format(dest)
+
+def transfer(dest: str,amount: int,sourse: str):
+  dest = str(ex.id_format(dest))
 
 
   if amount <= 0:
     return "不正な値です 送金額は0よりも大きい整数で入力してください"
-  elif ex.f_checker(sourse) == False:
+  if ex.f_checker(sourse) == False:
     register(sourse)
-  elif ex.f_checker(dest) == False:
-    register(dest)
-
-
+  if ex.f_checker(dest) == False:
+    return "送金先が見つかりません"
+  if dest == sourse:
+    return "送金元と送金先が同じです"
   if balance(sourse) < amount:
     return "残高が不足しています"
 
