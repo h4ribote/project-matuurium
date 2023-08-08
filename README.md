@@ -8,6 +8,7 @@ Project-matuutium
 
 # どんなボット？
 discordでFXっぽいことができるボット
+
 matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユーザー間で取引できる
 
 ビットコイン等の実在する通貨の変動に対応するものも制作予定
@@ -26,10 +27,10 @@ lune.py - 主にluneの操作に使われる関数
 
 ex.py - さまざまな操作の関数
 
-db/
-  _system/
-         promo-codes.txt - プロモーションコードに関する情報
-         log.txt - 送金等の操作のログ
+db/<br>
+  _system/<br>
+         promo-codes.txt - プロモーションコードに関する情報<br>
+         log.txt - 送金等の操作のログ<br>
   user/ - 各ユーザーの残高・取引情報
 
 # コマンド一覧
@@ -44,10 +45,10 @@ db/
 
 /promo-code - プロモーションコードを使用
 
-/order_buy & /order_sell - 注文を作成
-    注文は注文価格をlune、数量をmtriで指定
+/order_buy & /order_sell - 注文を作成<br>
+    注文は注文価格をlune、数量をmtriで指定<br>
     例:100luneを1mtriにしたい ==> /order_sell price 100 amount 1
 
 # 作成者
-h4ribote
+h4ribote<br>
 Discord: h4ribote#0
