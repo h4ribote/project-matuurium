@@ -18,6 +18,8 @@ matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユ
 
 .envにボットのトークンを貼り付けてmain.pyを実行
 
+全ユーザーは、どのコマンドよりも先に/registを実行してください
+
 # ファイル構成
 main.py - 名前の通りメインファイル。 .envにトークンを貼った後に起動する
 
