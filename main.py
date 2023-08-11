@@ -12,6 +12,8 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
+load_dotenv()
+
 TOKEN = os.getenv("BOT_TOKEN")
 
 
