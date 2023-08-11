@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 import discord
 from discord import app_commands
-import random
 import ex
 import bank
 import lune
@@ -20,58 +19,15 @@ TOKEN = os.getenv("BOT_TOKEN")
 @client.event
 async def on_ready():
   print ('成功しました')
-  print(f'" {client.user} "としてログイン中')
   await client.change_presence(activity=discord.Game(name=str(ex.cl())))
+  print(f'" {client.user} "としてログイン中')
   await tree.sync()
 
 
-@client.event
-async def on_message(message):
-  if message.author == client.user:
-    return
 
-  # メッセージが"なぁ、"または"なあ、"で始まっていたら応答
-  if message.content.startswith('なあ、') or message.content.startswith('なぁ、'):
-    reply_massage = random.randint(0,9)
-    emoji = "👍"
-    if reply_massage <= 4:
-      await message.add_reaction(emoji)
-      await message.channel.send('もちろん！！')
-    elif reply_massage >= 5 and reply_massage <= 8:
-      await message.add_reaction(emoji)
-      await message.channel.send('当たり前じゃないか！！')
-    else:
-      emoji ="❓"
-      await message.add_reaction(emoji)
-      await message.channel.send('いや別にそんなことはないと思いますけど')
-
-
-@tree.command(name="ping", description='とっても簡素なつくりのコマンド 実行したとき"pong"と返ってこなかったらボットは恐らく重度のエラーを吐いています')
+@tree.command(name="ping", description='ping')
 async def ping_command(interaction: discord.Interaction):
-  await interaction.response.send_message("pong")
-
-
-@tree.command(name="yes", description="yes")
-async def yes_command(interaction: discord.Interaction):
-  await interaction.response.send_message("yes")
-
-
-@tree.command(name="agree", description="同意してあげます")
-@app_commands.describe(con="同意してほしい内容(事実のみ使用可)",
-                       sent="文章の種類(1~4)",
-                       ene="訴えかけたい相手(sent=3の時のみ使用)")
-async def agree_command(interaction: discord.Interaction,
-                        con:str,
-                        sent:int,
-                        ene:str = "みんな"):
-  if sent == 1:
-    await interaction.response.send_message(f"はい！！私も{con}と思います！")
-  elif sent == 2:
-    await interaction.response.send_message(f"もちろん{con}よね")
-  elif sent == 3:
-    await interaction.response.send_message(f"まさか{ene}は{con}という事実を否定するのか？")
-  else:
-    await interaction.response.send_message(f"{con}！！")
+  await interaction.response.send_message("pong",ephemeral=True)
 
 
 @tree.command(name="regist", description="データベースに情報を登録します")

@@ -46,7 +46,7 @@ def id_format(user_id: str) -> str:
   return str(user_id)
 
 def cl() -> str:
-  activity = "課題に充てる時間はこのボットに費やされたのだフハハハハ...はぁ..."
+  activity = "Made by h4ribote"
   return str(activity)
 
 def log_maker(f: str,t: str,i: str,a: str) -> str:
