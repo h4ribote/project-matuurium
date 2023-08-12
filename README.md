@@ -53,6 +53,14 @@ db/<br>
 　　注文は注文価格をlune、数量をmtriで指定<br>
 　　例:100luneを1mtriにしたい ==> /order_sell price 100 amount 1
 
-# 作成者
+# 使用するうえでの注意点
+LICENSE.mdに記載されている内容を守って利用してください
+
+ライセンスの内容を日本語でざっくりと説明
+
+著作者からの許可なしの使用、改変、再配布はNG<br>
+使用したかったら連絡入れること
+
+著作者、連絡先
 h4ribote<br>
 Discord: h4ribote#0
