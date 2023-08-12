@@ -96,10 +96,15 @@ async def order_sell_command(interaction: discord.Interaction,number: int):
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
-@tree.command(name="price_list", description="取引価格を表示")
-async def price_list_command(interaction: discord.Interaction):
-  reply_result = lune.price_list()
-  reply_result = "準備中"
+@tree.command(name="exchange_rate", description="取引価格を表示")
+async def exchange_rate_command(interaction: discord.Interaction):
+  reply_result = lune.exchange_rate()
+  await interaction.response.send_message(reply_result,ephemeral=True)
+
+
+@tree.command(name="order_list", description="取引板？みんなの注文一覧？なんかそんなやつ  マジで便利だから作った  褒めて")
+async def order_list_command(interaction: discord.Interaction):
+  reply_result = lune.order_list()
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 

@@ -460,5 +460,124 @@ def show_order(user_id: str,num: int):
 
 
 
-def price_list():
-  return
+def exchange_rate() -> str:
+  
+  lowest = 0
+  lowest_amount = 0
+  highest = 0
+  highest_amount = 0
+  i = 0
+  ii = 0
+
+  with open(f"./db/_system/exchange_buy.txt", 'r') as data_buy:
+    data_buy = data_buy.read()
+  with open(f"./db/_system/exchange_sell.txt", 'r') as data_sell:
+    data_sell = data_sell.read()
+  
+
+  while i == 0:# data_buy.find(")") != -1
+    if data_buy.find(")") != -1:
+      ii = 1 # 注文の存在の確認
+      new_data_price = data_buy[data_buy.find("(")+1:data_buy.find(",")]
+      new_data_amount = data_buy[data_buy.find(",")+1:data_buy.find(")")]
+      new_data_price = int(new_data_price)
+      new_data_amount = int(new_data_amount)
+      data_buy = data_buy[data_buy.find(")")+1:]
+      if lowest >= new_data_price or (lowest==new_data_price and lowest_amount < new_data_amount) or lowest == 0:
+        lowest = new_data_price
+        lowest_amount = new_data_amount
+    elif ii == 0:
+      output = "売り:注文なし\n"
+      i = 1
+    else:
+      output = (f"売り:{lowest}lune => 1mtri\n")
+      i = 1
+  i = 0
+  ii = 0
+  while i == 0:
+    if data_sell.find(")") != -1:
+      ii = 1
+      new_data_price = int(data_sell[data_sell.find("(")+1:data_sell.find(",")])
+      new_data_amount = int(data_sell[data_sell.find(",")+1:data_sell.find(")")])
+      new_data_price = int(new_data_price)
+      new_data_amount = int(new_data_amount)
+      data_sell = data_sell[data_sell.find(")")+1:]
+      if highest <= new_data_price or (highest==new_data_price and highest_amount < new_data_amount) or highest ==0:
+        highest = new_data_price
+        highest_amount = new_data_amount
+    elif ii == 0:
+      output = output + "買い:注文なし"
+      i = 1
+    else:
+      output = output + (f"買い:1mtri => {highest}lune")
+      i = 1
+  
+  return (output)
+
+
+
+def order_list() -> str:
+  i = 0
+  ii = 0
+  output = "価格(lune)/数量(mtri)\n**売り**\n"
+  list_order = {}
+
+  with open(f"./db/_system/exchange_buy.txt", 'r') as data_buy:
+    data_buy = data_buy.read()
+  with open(f"./db/_system/exchange_sell.txt", 'r') as data_sell:
+    data_sell = data_sell.read()
+  
+  while i == 0:
+    if data_sell.find(")") != -1:
+      ii = 1
+      new_data_price = data_sell[data_sell.find("(")+1:data_sell.find(",")]
+      new_data_amount = data_sell[data_sell.find(",")+1:data_sell.find(")")]
+      data_sell = data_sell[data_sell.find(")")+1:]
+
+      if new_data_price in list_order:
+        list_order[str(new_data_price)] += int(new_data_amount)
+      else:
+        list_order[str(new_data_price)] = int(new_data_amount)
+
+    elif ii == 1:
+      i = 1
+      sorted_items = sorted(list_order.items(), key=lambda x: x[1], reverse=True)
+      list_order = dict(sorted_items)
+
+      for price, amount in list_order.items():
+        output += (f"{price}/{amount}\n")
+    
+    else:
+      output += "注文なし\n"
+      i = 1
+  
+
+  i = 0
+  ii = 0
+  output += "**買い**\n"
+  
+  
+  while i == 0:
+    if data_buy.find(")") != -1: # 注文の存在の確認
+      ii = 1
+      new_data_price = data_buy[data_buy.find("(")+1:data_buy.find(",")]
+      new_data_amount = data_buy[data_buy.find(",")+1:data_buy.find(")")]
+      data_buy = data_buy[data_buy.find(")")+1:]
+
+      if new_data_price in list_order:
+        list_order[str(new_data_price)] += int(new_data_amount)
+      else:
+        list_order[str(new_data_price)] = int(new_data_amount)
+    elif ii == 1:
+      i = 1
+      sorted_items = sorted(list_order.items(), key=lambda x: x[1])
+      list_order = dict(sorted_items)
+
+      for price, amount in list_order.items():
+        output += (f"{price}/{amount}\n")
+    else:
+      output += "注文なし\n"
+      i = 1
+
+  
+  return (output)
