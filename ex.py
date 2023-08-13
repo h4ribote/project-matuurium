@@ -90,25 +90,21 @@ def promo(code:str,user_id:str):
       index = content.find(code)
       if index != -1:
         # ターゲットの文字列が見つかった場合
-        reward = content[index + len(code):index + len(code) + 8]
-        times = content[index + len(code) + 9:]
-        index2 = times.find(")")
-        times = int(times[:index2]) #times=使用回数
+        content0 = content[content.find(code):]
+        reward = int(content0[content0.find("=")+1:content0.find("(")])
+        times = int(content0[content0.find("(")+1:content0.find(")")])#times=使用回数
         if times == 0:
           return "既に使用可能な回数を超えたコードです"
         else:
-          times = times - 1
-          times = str(times)
-        remove = "x"
-        reward = reward.replace(remove, "")
-        reward = int(reward)
+          times = str(times - 1)
         bank.transfer(user_id,reward,"!admin-bank")
         reward = str(reward)
         with open((f'./db/user/{user_id}/promo.txt'), 'a') as text:
-          text.write(f'\n{code}used')
-        content1 = content[:index + len(code) + 9]
-        content2 = content[index + len(code) + 9 + index2:]
-        new_content = content1 + times + content2
+          text.write(f'{code}used\n')
+        content1 = content[:content.find(code)]
+        content2 = content0[:content0.find("(")+1]
+        content3 = content0[content0.find(")"):]
+        new_content = content1 + content2 + times + content3
         with open("./db/_system/promo-codes.txt", "w") as count:
           count.write(new_content)
         code = code.replace("=","")
