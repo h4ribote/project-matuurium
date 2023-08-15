@@ -5,6 +5,7 @@ from discord import app_commands
 import ex
 import bank
 import lune
+import btc
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -105,6 +106,37 @@ async def exchange_rate_command(interaction: discord.Interaction):
 @tree.command(name="order_list", description="取引板？みんなの注文一覧？なんかそんなやつ  マジで便利だから作った  褒めて")
 async def order_list_command(interaction: discord.Interaction):
   reply_result = lune.order_list()
+  await interaction.response.send_message(reply_result,ephemeral=True)
+
+
+@tree.command(name="btc-buy", description="btcを購入(lune=>btc)")
+@app_commands.describe(amount="数量")
+async def btc_buy_command(interaction: discord.Interaction,amount: int):
+  btc.sync_price()
+  reply_result = btc.buy(interaction.user.id,amount)
+  await interaction.response.send_message(reply_result,ephemeral=True)
+
+
+@tree.command(name="btc-sell", description="btcを売却(btc=>lune)")
+@app_commands.describe(amount="数量")
+async def btc__command(interaction: discord.Interaction,amount: int):
+  btc.sync_price()
+  reply_result = btc.sell(interaction.user.id,amount)
+  await interaction.response.send_message(reply_result,ephemeral=True)
+
+
+@tree.command(name="btc-rate", description="btcの取引価格を表示")
+async def btc__command(interaction: discord.Interaction):
+  btc.sync_price()
+  reply_result = btc.exchange_rate()
+  await interaction.response.send_message(reply_result,ephemeral=True)
+
+
+@tree.command(name="btc_balance", description="btcの残高を表示")
+async def btc__command(interaction: discord.Interaction):
+  btc.sync_price()
+  balance = btc.balance(interaction.user.id)
+  reply_result = (f'残高は{balance}btcです')
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
