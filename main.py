@@ -26,7 +26,7 @@ async def on_ready():
 
 
 
-@tree.command(name="ping", description='ping')
+@tree.command(name="ping", description='とっても簡素なつくりのコマンド 実行したとき"pong"と返ってこなかったらボットは恐らく重度のエラーを吐いています')
 async def ping_command(interaction: discord.Interaction):
   await interaction.response.send_message("pong",ephemeral=True)
 
@@ -40,7 +40,7 @@ async def regist_command(interaction: discord.Interaction):
     await interaction.response.send_message('登録が完了しました',ephemeral=True)
 
 
-@tree.command(name="balance", description="残高を確認します")
+@tree.command(name="mtri-balance", description="matuuriumの残高を確認します")
 async def balance_command(interaction: discord.Interaction):
   user_balance = bank.balance(interaction.user.id)
   await interaction.response.send_message(f'あなたの残高は{user_balance}mtriです',ephemeral=True)
@@ -52,13 +52,17 @@ async def lune_balance_command(interaction: discord.Interaction):
   await interaction.response.send_message(f'あなたの残高は{user_lune_balance}luneです',ephemeral=True)
 
 
-@tree.command(name="transfer", description="mtriを送金します")
-@app_commands.describe(to="送金先のユーザー名(@から始まる形にしてください)",
-                       amount="送金額")
-async def agree_command(interaction: discord.Interaction,
-                        to:str,
-                        amount:int):
+@tree.command(name="mtri-transfer", description="mtriを送金します")
+@app_commands.describe(to="送金先のユーザー名(@から始まる形にしてください)",amount="送金額")
+async def agree_command(interaction: discord.Interaction,to:str,amount:int):
   transfer_result = bank.transfer(to,amount,interaction.user.id)
+  await interaction.response.send_message(transfer_result,ephemeral=True)
+
+
+@tree.command(name="lune-transfer", description="luneを送金します")
+@app_commands.describe(to="送金先のユーザー名(@から始まる形にしてください)",amount="送金額")
+async def agree_command(interaction: discord.Interaction,to:str,amount:int):
+  transfer_result = lune.transfer(interaction.user.id,to,amount)
   await interaction.response.send_message(transfer_result,ephemeral=True)
 
 
@@ -69,41 +73,41 @@ async def promo_command(interaction: discord.Interaction,code:str):
   await interaction.response.send_message(auth_result,ephemeral=True)
 
 
-@tree.command(name="order_buy", description="買い注文を作成(luneを購入)")
+@tree.command(name="lune-buy", description="買い注文を作成(luneを購入)")
 @app_commands.describe(price="注文価格(lune)",amount="注文数量(mtri)")
 async def order_buy_command(interaction: discord.Interaction,price:int,amount:int):
   reply_result = lune.buy(price,amount,interaction.user.id)
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
-@tree.command(name="order_sell", description="売り注文を作成(luneを売却・mtriを購入)")
+@tree.command(name="lune-sell", description="売り注文を作成(luneを売却・mtriを購入)")
 @app_commands.describe(price="注文価格(lune)",amount="注文数量(mtri)")
 async def order_sell_command(interaction: discord.Interaction,price:int,amount:int):
   reply_result = lune.sell(price,amount,interaction.user.id)
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
-@tree.command(name="order_cancel", description="注文をキャンセル")
+@tree.command(name="order-cancel", description="注文をキャンセル")
 @app_commands.describe(order_id="注文ID",buy_or_sell="取り消したい注文の種類 購入の場合はbuy、売却の場合はsell")
 async def order_cansel_command(interaction: discord.Interaction,order_id:str,buy_or_sell:str):
   reply_result = lune.cancel_order(interaction.user.id,buy_or_sell,order_id)
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
-@tree.command(name="history_order", description="注文履歴を表示")
+@tree.command(name="history-order", description="注文履歴を表示")
 @app_commands.describe(number="表示させる件数(全て表示するには0を指定)")
 async def order_sell_command(interaction: discord.Interaction,number: int):
   reply_result = lune.show_order(interaction.user.id,number)
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
-@tree.command(name="exchange_rate", description="取引価格を表示")
+@tree.command(name="lune-rate", description="luneの取引価格を表示")
 async def exchange_rate_command(interaction: discord.Interaction):
   reply_result = lune.exchange_rate()
   await interaction.response.send_message(reply_result,ephemeral=True)
 
 
-@tree.command(name="order_list", description="取引板？みんなの注文一覧？なんかそんなやつ  マジで便利だから作った  褒めて")
+@tree.command(name="lune-list", description="取引板？みんなの注文一覧？なんかそんなやつ  マジで便利だから作った  褒めて")
 async def order_list_command(interaction: discord.Interaction):
   reply_result = lune.order_list()
   await interaction.response.send_message(reply_result,ephemeral=True)

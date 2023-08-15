@@ -16,20 +16,29 @@ def balance(user_id) -> int:
 
 
 def transfer(sourse: str,dest: str,amount: int):
-
+  if ex.f_checker(sourse) == False:
+    bank.register(sourse)
+  if ex.f_checker(dest) == False:
+    return "送金先が見つかりません"
+  if amount <= 0:
+    return "不正な値です 送金額は0よりも大きい整数で入力してください"
+  if dest == sourse:
+    return "送金元と送金先が同じです"
   sourse_balance = balance(sourse)
-  sourse_balance = sourse_balance - amount
   dest_balance = balance(dest)
+  
+
+  if sourse_balance < amount:
+    return "残高が不足しています"
   dest_balance = dest_balance + amount
-
-
+  sourse_balance = sourse_balance - amount
   with open(ex.path(sourse,"lune"), 'w') as f:
     f.write(str(sourse_balance))
   with open(ex.path(dest,"lune"), 'w') as f2:
     f2.write(str(dest_balance))
   ex.log_maker(sourse,dest,"lune_transfer",f"{amount}lune")
 
-  return True
+  return (f'送金が完了しました\n送金先{dest}:送金額 {amount}')
 
 
 
