@@ -80,4 +80,4 @@ LICENSE.mdに記載されている内容を守って利用してください
 
 著作者、連絡先<br>
 h4ribote<br>
-Discord: h4ribote#0
+Discord: h4ribote
