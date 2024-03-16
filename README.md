@@ -69,6 +69,6 @@ db/<br>
 /btc-(操作) - btcの売買や残高の表示(価格はBybitから取得しています)
 
 
-著作者、連絡先<br>
+# 著作者、連絡先<br>
 h4ribote<br>
 Discord: h4ribote
