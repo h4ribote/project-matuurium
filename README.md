@@ -12,7 +12,6 @@ discordでFXっぽいことができるボット
 matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユーザー間で取引できる
 
 ビットコイン等の実在する通貨の変動に対応するものも制作予定<br>
-(気付いたらビットコイン取引できるようになってた)
 
 # 使い方は？年収は？彼女はいるの？
 調べてみました！()
@@ -31,7 +30,7 @@ matuurium(mtri)とchihalune(lune)と呼ばれる2種類の通貨をdiscordのユ
 **lune**(chihalune)<br>
 主に通貨間の売買で利用する通貨(usdtみたいなやつ) チャットマイニング(メッセージの送信で利益を得る)などの機能を実装予定のため、流通量が増える<br>
 **btc**(bitcoin)<br>
-みんな大好きデジタルゴールド bybitのUSDTとのペアとluneの価格が同期している<br>
+みんな大好きデジタルゴールド bybitのBTCUSDTとluneの価格が同期している<br>
 つまり、1btc=20,000usdtの時、1btc=20,000lune...高いね...<br>
 
 # ファイル構成
